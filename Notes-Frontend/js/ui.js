@@ -125,10 +125,10 @@ var menu_template = `
 `;
 
 var menu_item_template = `
-        <li>
+        <li onclick="$('#menu-content li').removeClass('active'); $(this).addClass('active');">
             <a id="n_{note_id}" onclick="getNote({note_id})">{note_name}</a>
-            <a onclick="deleteNote({note_id})">
-                <i class="fa fa-trash fa-lg btn pull-right" style="margin-top:5px"></i>
+            <a onclick="deleteNote({note_id})" style="position: absolute; right:0px; min-width:0px; padding-right: 0px;">
+                <i class="fa fa-trash fa-lg btn" style="margin-top:5px"></i>
             </a>
         </li>
 `;

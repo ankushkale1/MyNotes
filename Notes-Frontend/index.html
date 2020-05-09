@@ -10,6 +10,7 @@
   <link href="css/main.css" rel="stylesheet">
   <link href="css/magnific-popup.css" rel="stylesheet">
   <link href="css/page.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
 
   <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.1/highlight.min.js"></script>
@@ -36,9 +37,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">
+      <!--a class="navbar-brand" href="#">
         <span class="fa fa-sticky-note"> Notes App</span>
-      </a>
+      </a-->
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
 
@@ -170,45 +171,48 @@
       <ul class="nav navbar-nav navbar-right">
 
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <a class="dropdown-toggle" data-toggle="dropdown" style="font-size: 18px;" role="button" aria-haspopup="true" aria-expanded="false">
+            <label id="currentNotebook"></label>
+          </a>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" style="font-size: 18px;" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="fa fa-arrow-right"></span>
+          </a>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" style="font-size: 18px;" role="button" aria-haspopup="true" aria-expanded="false">
             <label id="notename">My Note</label>
           </a>
         </li>
 
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <label id="currentNotebook">
-            </label>
-          </a>
-        </li>
-
-        <li class="dropdown">
-          <a onclick="getNoteBookMeta()" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <a aria-label="Refresh" data-balloon-pos="down" style="font-size: 18px;" onclick="getNoteBookMeta()" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-refresh" role="presentation"></i>
             <span class="small-scn-menu-text">Refresh</span>
           </a>
         </li>
 
         <li class="dropdown">
-          <a href="#NewNote" class="dropdown-toggle mypopup" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <a aria-label="New Note" data-balloon-pos="down" style="font-size: 18px;" href="#NewNote" class="dropdown-toggle mypopup" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-sticky-note" role="presentation"></i><span class="small-scn-menu-text">New Note</span>
           </a>
         </li>
 
         <li class="dropdown">
-          <a href="#NewBook" class="dropdown-toggle mypopup" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <a href="#NewBook" aria-label="New Notebook" data-balloon-pos="down" style="font-size: 18px;" class="dropdown-toggle mypopup" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-book" role="presentation"></i><span class="small-scn-menu-text">New Notebook</span>
           </a>
         </li>
 
         <li class="dropdown">
-          <a onclick="addUpdateNote()" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <a onclick="addUpdateNote()" aria-label="Save" data-balloon-pos="down" style="font-size: 18px;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-save" role="presentation"></i><span class="small-scn-menu-text">Save</span>
           </a>
         </li>
 
         <li class="dropdown">
-          <a href="#search" onclick="clearPrevSearch()" class="dropdown-toggle mypopup" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <a href="#search" aria-label="Search" data-balloon-pos="down" style="font-size: 18px;" onclick="clearPrevSearch()" class="dropdown-toggle mypopup" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-search" role="presentation"></i><span class="small-scn-menu-text">Search</span>
           </a>
         </li>

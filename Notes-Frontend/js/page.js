@@ -195,35 +195,41 @@ function addUpdateNote(notename,notebook)
 
 function deleteNotebook(notebookid)
 {
-    $.ajax({
-        type: "GET",
-        url: SERVER_URLS.DELETE_NOTEBOOK+"/"+notebookid,
-        success: function(res)
-        {
-            notebook_meta_map.delete(notebookid);
-            populateNoteBooks();
-        },
-        error: function(res,statuscode)
-        {
-            console.info(res+" "+statuscode);
-        },
-    });
+    if (confirm('Delete Notebook ??')) 
+    {
+        $.ajax({
+            type: "GET",
+            url: SERVER_URLS.DELETE_NOTEBOOK+"/"+notebookid,
+            success: function(res)
+            {
+                notebook_meta_map.delete(notebookid);
+                populateNoteBooks();
+            },
+            error: function(res,statuscode)
+            {
+                console.info(res+" "+statuscode);
+            },
+        });
+    }
 }
 
 function deleteNote(noteid)
 {
-    $.ajax({
-        type: "GET",
-        url: SERVER_URLS.DELETE_NOTE+"/"+noteid,
-        success: function(res)
-        {
-            getNoteBookMeta();
-        },
-        error: function(res,statuscode)
-        {
-            console.info(res+" "+statuscode);
-        },
-    });
+    if (confirm('Delete Note ??')) 
+    {
+        $.ajax({
+            type: "GET",
+            url: SERVER_URLS.DELETE_NOTE+"/"+noteid,
+            success: function(res)
+            {
+                getNoteBookMeta();
+            },
+            error: function(res,statuscode)
+            {
+                console.info(res+" "+statuscode);
+            },
+        });
+    }
 }
 
 
