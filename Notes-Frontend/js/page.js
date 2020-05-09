@@ -23,8 +23,13 @@ function getNote(noteid)
         //url: "https://591dea16-659a-4324-88bf-2df285701d78.mock.pstmn.io/notes/getNote/14",
         success: function(res)
         {
-            var data = JSON.parse(res.jsonnotes);
-            editor.setContents(data,'api');
+            try
+            {
+                var data = JSON.parse(res.jsonnotes);
+                editor.setContents(data,'api');
+            }catch(e){
+                editor.container.firstChild.innerHTML = res.jsonnotes;
+            }
 
             //var delta_ops = { "ops" : data.ops.slice(current_page*per_page,(current_page*per_page)+per_page) };
             //editor.setContents(new editor.delta(delta_ops),'api');
@@ -99,6 +104,23 @@ function addNotebook(notebookname)
     }); 
 }
 
+function getPlainContent()
+{
+    var html = editor.container.innerHTML;
+    html = html.replace(/<style([\s\S]*?)<\/style>/gi, '');
+    html = html.replace(/<script([\s\S]*?)<\/script>/gi, '');
+    html = html.replace(/<\/div>/ig, '\n');
+    html = html.replace(/<\/li>/ig, '\n');
+    html = html.replace(/<li>/ig, '  *  ');
+    html = html.replace(/<\/ul>/ig, '\n');
+    html = html.replace(/<\/p>/ig, '\n');
+    html = html.replace(/<br\s*[\/]?>/gi, "\n");
+    html = html.replace(/<[^>]+>/ig, '');
+    html = html.replace(/\n+/g, '\n')
+
+    return html;
+}
+
 function addUpdateNote(notename,notebook)
 {
     //console.log(editor.container.innerHTML);
@@ -111,6 +133,7 @@ function addUpdateNote(notename,notebook)
             "note_id" : current_note.note_id,
             "notename" : current_note.notename,
             "jsonnotes" : JSON.stringify(editor.getContents()),
+            "plain_content" : getPlainContent(),
             "keywords" : current_note.keywords,
             "notebook" : {
                 "notebook_id" : current_note.notebook_id
@@ -203,11 +226,12 @@ function deleteNote(noteid)
     });
 }
 
-function searchText(stext)
+
+function searchText()
 {
     $.ajax({
         type: "GET",
-        url: SERVER_URLS.SEARCH.replace('{searchtxt}',stext),
+        url: SERVER_URLS.SEARCH.replace('{searchtxt}',$("[name='stxt']").val()),
         success: function(res)
         {
             $('#search-content').html("");
@@ -215,12 +239,22 @@ function searchText(stext)
             for(i=0;i<res.length;i++)
             {
                 note = res[i];
-                console.info(note.notename);
+                //var content = note.plain_content.replaceAll(stext,"<mark>"+stext+"</mark>");
+                //console.info(note.notename);
                 $('#search-content').append(`
-                <div class="card">
-                    <div class="card-body">
-                        <div class="nid" style='display:none;'>${note.note_id}</div>
-                        <div class="nbody">${note.jsonnotes}</div>
+
+                <div class="card" style="max-height: 200px; overflow: hidden; margin: 10px;">
+                    <div class="card-header">
+                        <a style="font-size:20px;" data-toggle="collapse" href="#scontent_${note.note_id}" aria-expanded="true" aria-controls="scontent_${note.note_id}">
+                            ${note.notename}
+                        </a>
+                        <span style="cursor: pointer; font-size:20px;" class="fa fa-large-op fa-arrow-circle-o-right" onclick="getNote(${note.note_id})"></span>
+                    </div>
+                    <div id="scontent_${note.note_id}" class="collapse">
+                        <div class="card-block" style="cursor: pointer;" onclick="$.magnificPopup.close();getNote(${note.note_id})">
+                            <div class="nid" style='display:none;'>${note.note_id}</div>
+                            <div class="nbody">${note.plain_content}</div>
+                        </div>
                     </div>
                 </div>
                 `);
@@ -232,3 +266,21 @@ function searchText(stext)
         },
     });
 }
+
+const dSearch = function(fn,delay)
+{
+    let timer;
+
+    return function()
+    {
+        let context = this;
+        args = arguments;
+        clearTimeout(timer);
+
+        timer = setTimeout(() =>{
+            fn.apply(context,args);
+        },delay);
+    }
+}
+
+const search = dSearch(searchText,300);

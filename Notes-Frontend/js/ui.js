@@ -1,3 +1,16 @@
+$(document).ready(function () 
+{
+    sideBarInit();
+    pageInit();
+    popup_init();
+});
+
+function clearPrevSearch()
+{
+    $('#search-content').html('');
+    $('[name="stxt"]').val("");
+}
+
 function htmlbodyHeightUpdate(){
     var height3 = $( window ).height()
     var height1 = $('.nav').height()+50
@@ -25,13 +38,6 @@ function sideBarInit()
           htmlbodyHeightUpdate()
     });
 }
-
-$(document).ready(function () 
-{
-    sideBarInit();
-    pageInit();
-    popup_init();
-});
 
 function popup_init()
 {
