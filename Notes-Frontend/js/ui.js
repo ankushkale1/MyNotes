@@ -97,12 +97,33 @@ var toolbarOptions = [
 
 var editor = null;
 
+var bindings = {
+
+    code:
+    {
+        key: 'C', 
+        shiftKey: null, 
+        ctrlKey : true,
+        altKey : true,
+
+        handler: function(range, context) 
+        {
+            //console.info("Alt + ctrl + C");
+            editor.formatText(range, 'code', true);
+        }
+    }
+};
+
 //$(document).ready()
 $(window).on('load', function () {
     editor = new Quill('#editor', {
         syntax: true,
         modules: {
-            toolbar: toolbarOptions
+            toolbar: toolbarOptions,
+            magicUrl: true,
+            keyboard: {
+                bindings: bindings
+            }
         },
         theme: 'snow',
         imageDrop: true,
